@@ -2,13 +2,9 @@
 
 1. Create and activate virtual environment
 2. Run `pip install -r requirements.txt`
-3. Open a `python` shell and run:
-
-```python
-from app import db
-db.create_all()
-quit()
-```
+3. Run `flask db init`
+4. Run `flask db migrate -m "users table"`
+5. Run `flask db upgrade`
 4. Run `flask run`
 
 
