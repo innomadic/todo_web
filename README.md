@@ -14,4 +14,7 @@ quit()
 
 # References
 
-https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins
+* [Grinberg Flask Mega Tutorial: Logins](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins)
+* [Flask](https://flask.palletsprojects.com/en/1.1.x/)
+* [Flask WTF](https://flask-wtf.readthedocs.io/en/stable/)
+* [Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/)
