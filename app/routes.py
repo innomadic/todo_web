@@ -4,7 +4,7 @@ from app.forms import RegistrationForm, LoginForm
 from sqlalchemy import or_
 from app.models import User
 from flask_login import current_user, login_user, logout_user, login_required
-
+from werkzeug.urls import url_parse
 
 @app.route('/')
 @app.route('/index')
