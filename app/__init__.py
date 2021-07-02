@@ -3,8 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 import os 
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
+Bootstrap(app)
+
 # config for forms 
 
 # this key should not be in souce code for production

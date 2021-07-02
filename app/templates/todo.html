@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <h2>Task</h1>
+    <form action="" method="post" class="form-floating">
+        {{ form.hidden_tag() }}
+
+            {{ form.text(size=32, class_="form-control", id="editTaskForm", placeholder="Your description") }}
+            {{ form.text.label(class_="form-label", for="editTaskForm") }}
+
+            <br/>
+            {% for error in form.text.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+        <div>
+            {{ form.save(class_="btn btn-primary") }}
+            {{ form.delete(class_="btn btn-primary") }}
+        </div>
+    </form>
+
+{% endblock %}

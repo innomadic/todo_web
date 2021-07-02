@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container ml-8">
+    <h2>New Task</h1>
+    <form action="" method="post" class="form-floating">
+        {{ form.hidden_tag() }}
+
+            {{ form.text(size=32, class_="form-control", id="newTaskForm", placeholder="Your description") }}
+            {{ form.text.label(class_="form-label", for="newTaskForm") }}
+
+            <br/>
+            {% for error in form.text.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+        <p>{{ form.submit(class_="btn btn-primary") }}</p>
+    </form>
+
+    <h1>Current Tasks</h1>
+
+    <ul class"list-group">
+    {% for todo in todos %}
+        <li class="ml-12 list-group-item">
+            <a href="{{url_for('todo', todo_id=todo.id)}}">{{ todo.text }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>    
+{% endblock %}

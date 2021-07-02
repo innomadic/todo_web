@@ -4,6 +4,16 @@ from wtforms.validators import DataRequired, Email, ValidationError, EqualTo
 
 from app.models import User
 
+class TodoForm(FlaskForm):
+    text = StringField('Description', validators=[DataRequired()])
+    submit = SubmitField('Add')
+
+class TodoEditForm(FlaskForm):
+    text = StringField('Description', validators=[DataRequired()])
+    save = SubmitField(label='Save')
+    delete = SubmitField(label='Delete')
+
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])

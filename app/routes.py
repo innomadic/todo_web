@@ -1,16 +1,25 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import RegistrationForm, LoginForm
+from app.forms import RegistrationForm, LoginForm, TodoForm, TodoEditForm
 from sqlalchemy import or_
-from app.models import User
+from app.models import User, Todo
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template('users.html', title='Users', users = User.query.all())
+    form = TodoForm()
+    if form.validate_on_submit():
+        todo = Todo(text=form.text.data)
+        db.session.add(todo)
+        db.session.commit()
+        flash('Congratulations, you added a new todo!')
+        return redirect(url_for('index'))
+
+
+    return render_template('todos.html', title='Todos', todos = Todo.query.all(), form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -48,3 +57,21 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+@app.route('/todos/<int:todo_id>', methods=['GET', 'POST'])
+def todo(todo_id):
+    form = TodoEditForm()
+    todo = Todo.query.filter_by(id=todo_id).first()
+    if form.validate_on_submit():
+        if(form.save.data):
+            todo.text=form.text.data
+            flash('Congratulations, you edited a todo!')
+        else:
+            db.session.delete(todo)
+            flash('Congratulations, you deleted a todo!')
+        db.session.commit()
+        return redirect(url_for('index'))
+    if todo is not None:
+        form.text.data = todo.text
+    
+    return render_template('todo.html', title='Todo', form=form)

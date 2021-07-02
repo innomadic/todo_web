@@ -19,3 +19,12 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)        
+
+
+class Todo(db.Model):
+    __tablename__ = 'todo'
+    text = db.Column(db.String)
+    id = db.Column(db.Integer, primary_key=True)
+
+    def __repr__(self):
+        return f'<Todo id={self.id} text={self.text}>'
