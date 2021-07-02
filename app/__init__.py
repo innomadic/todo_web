@@ -13,7 +13,8 @@ Bootstrap(app)
 # config for forms 
 
 # this key should not be in souce code for production
-app.config['SECRET_KEY'] = 'secret321'
+# create a .env file and set your own
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'secret321'
 
 # config for db
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -21,11 +22,12 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 uri = os.getenv("DATABASE_URL")  # or other relevant config var
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = uri or \
-    'sqlite:///' + os.path.join(basedir, 'app.db')
+if uri is not None:
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = uri
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
