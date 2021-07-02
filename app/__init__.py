@@ -4,6 +4,8 @@ import os
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
+import os
+import re
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -17,9 +19,14 @@ app.config['SECRET_KEY'] = 'secret321'
 basedir = os.path.abspath(os.path.dirname(__file__))
  
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or \
+
+uri = os.getenv("DATABASE_URL")  # or other relevant config var
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri or \
     'sqlite:///' + os.path.join(basedir, 'app.db')
-    
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
